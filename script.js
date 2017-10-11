@@ -29,7 +29,7 @@ function myFunction()
 	var ctx = canvas.getContext("2d");
 	ctx.clearRect(0,0,canvas.width,canvas.height )
 
-	var text =document.querySelector(".text");
+	var text =document.querySelector("#output");
 	var textarea = document.querySelector(".txtarea");
 	text.innerHTML = "";
 
@@ -71,6 +71,8 @@ function myFunction()
 			console.log("Sorry not implemented")
 			break;
 		case '[':
+		// NOT CORRECT IMPLEMENTATION ON BRAINFUCK 
+		// THIS SHOULD JUMP TO LOOP END IF DONE
 			loops.push(index);
 			break;
 		case ']':
@@ -82,7 +84,6 @@ function myFunction()
 			{
 				loops.pop();
 			}
-			//
 			break;
 		case '0':
 			numbers[pointer] = numbers[pointer]^1
@@ -109,7 +110,6 @@ function myFunction()
 			numbers[pointer] = numbers[pointer]^128
 			break;
 		}
-//		console.log(numbers[pointer]);
 		index++;
 	}
 }
@@ -118,12 +118,10 @@ function myFunction()
 
 function drawPixel(value)
 {
-//	var c = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
 
 	var x = currentPixel%imageWidth
 	var y = Math.floor( currentPixel/imageWidth)
-	//ctx.fillStyle = 'rgb(' +getRed(value)+','+  getBlue(value)+','+ getGreen(value) +','+ getAlpha(value)+ ')'
 	ctx.fillStyle = 'rgb(' +getRed(value)+','+  getGreen(value)+','+ getBlue(value) + ')'
 	ctx.fillRect(x*pixelWidth, y*pixelHeight, pixelWidth, pixelHeight);
 
