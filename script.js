@@ -1,8 +1,8 @@
 
 var canvasWidth = 256;
 var canvasHeight = 256;
-var imageWidth = 8;
-var imageHeight = 8;
+var imageWidth = 16;
+var imageHeight = 16;
 
 var pointer = 0;
 var memorySize = 3000;
@@ -58,13 +58,17 @@ function myFunction()
 				numbers[pointer]=0;
 			break;
 		case '-':
+
 			numbers[pointer]--;
+			if(numbers[pointer]< 0)
+				numbers[pointer] = 255
 			break;
 		case '.':
 			text.innerHTML += String.fromCharCode(numbers[pointer]);
 			drawPixel(numbers[pointer])
 			break;
 		case ',':
+			console.log("Sorry not implemented")
 			break;
 		case '[':
 			loops.push(index);
@@ -80,9 +84,32 @@ function myFunction()
 			}
 			//
 			break;
+		case '0':
+			numbers[pointer] = numbers[pointer]^1
+			break;
+		case '1':
+			numbers[pointer] = numbers[pointer]^2
+			break;
+		case '2':
+			numbers[pointer] = numbers[pointer]^4
+			break;
+		case '3':
+			numbers[pointer] = numbers[pointer]^8
+			break;
+		case '4':
+			numbers[pointer] = numbers[pointer]^16
+			break;
+		case '5':
+			numbers[pointer] = numbers[pointer]^32
+			break;
+		case '6':
+			numbers[pointer] = numbers[pointer]^64
+			break;
+		case '7':
+			numbers[pointer] = numbers[pointer]^128
+			break;
 		}
-
-		//console.log(textarea.value.length);
+//		console.log(numbers[pointer]);
 		index++;
 	}
 }
@@ -97,37 +124,32 @@ function drawPixel(value)
 	var x = currentPixel%imageWidth
 	var y = Math.floor( currentPixel/imageWidth)
 	//ctx.fillStyle = 'rgb(' +getRed(value)+','+  getBlue(value)+','+ getGreen(value) +','+ getAlpha(value)+ ')'
-	ctx.fillStyle = 'rgb(' +getRed(value)+','+  getBlue(value)+','+ getGreen(value) + ')'
+	ctx.fillStyle = 'rgb(' +getRed(value)+','+  getGreen(value)+','+ getBlue(value) + ')'
 	ctx.fillRect(x*pixelWidth, y*pixelHeight, pixelWidth, pixelHeight);
 
-	console.log('rgb(' +getRed(value)+','+  getBlue(value)+','+ getGreen(value) + ')')
+	console.log(getRed(value));
 
 	currentPixel++;
 	if(currentPixel == imageWidth*imageHeight)
 		currentPixel = 0;
 }
-function getRed(value)
-{
-	return (3 & value) *64+getHighlight(value)
-}
 function getBlue(value)
 {
-	return ((12 & value)>>2) *64+getHighlight(value)
+	return Math.floor((3 & value) *85*getHighlight(value))
 }
 function getGreen(value)
 {
-	return ((48 & value)>>4) *64+getHighlight(value)
+	return Math.floor(((12 & value)>>2) *85*getHighlight(value))
+}
+function getRed(value)
+{
+	return Math.floor(((48 & value)>>4) *85*getHighlight(value))
 }
 
-// function 
+// (196 & value)>>6)
+// (3 & value)
 
 function getHighlight(value)
 {
-	return ((196 & value)>>6) *16
+	return 0.25+((196 & value)>>6)*0.25
 }
-
-//function getAlpha(value)
-//{
-//	return 255
-//	return ((196 & value)>>6) /4
-//}
