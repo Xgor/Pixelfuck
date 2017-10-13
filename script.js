@@ -106,6 +106,7 @@ function setResolution(res)
 	        break;
 	    }
 	}
+	changeResolution()
 }
 
 function changeResolution()
