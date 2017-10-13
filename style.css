@@ -16,10 +16,39 @@ body
 	background: #111111;
 }
 
+#left
+{
+	float: left;
+}
+
+#right
+{
+	float: right;
+	margin-right: 10%;
+}
+
+td:nth-of-type(1)
+{
+	font-weight: bold;
+	font-size: 1.5em;
+	color: #ff9999;
+}
+
+.info
+{
+	width: 10px;
+	padding: 10px;
+	background: #cccccc;
+	width: 33vw;
+	
+	background: #777777;
+	color: #ffffff;
+
+}
+
 #output
 {
 	margin-top: 10px;
-	font-family: 'Press Start 2P', cursive;
 	background: #ffffff;
 	color: #000000;
 	width: 100%;
