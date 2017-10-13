@@ -1,6 +1,6 @@
 
-var canvasWidth = 256;
-var canvasHeight = 256;
+var canvasWidth = 512;
+var canvasHeight = 512;
 var imageWidth = 16;
 var imageHeight = 16;
 
@@ -17,14 +17,16 @@ var pixelHeight
 
 //var checkerboard = "->.<.>.<.>.<.>.<..>.<.>.<.>.<.>.<>.<.>.<.>.<.>.<..>.<.>.<.>.<.>.<>.<.>.<.>.<.>.<..>.<.>.<.>.<.>.<>.<.>.<.>.<.>.<..>.<.>.<.>.<.>.<"
 
-function myFunction()
+function onLoad()
+{
+	changeResolution();
+}
+
+function RunCode()
 {
 	currentPixel = 0
-
+//	changeResolution();
 	
-	pixelWidth = canvasWidth/imageWidth;
-	pixelHeight = canvasHeight/imageHeight;
-
 	canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
 	ctx.clearRect(0,0,canvas.width,canvas.height )
@@ -68,7 +70,6 @@ function myFunction()
 			drawPixel(numbers[pointer])
 			break;
 		case ',':
-			console.log("Sorry not implemented")
 			break;
 		case '[':
 		// NOT CORRECT IMPLEMENTATION ON BRAINFUCK 
@@ -85,36 +86,50 @@ function myFunction()
 				loops.pop();
 			}
 			break;
-		case '0':
-			numbers[pointer] = numbers[pointer]^1
+		case '{':
+			numbers[pointer]= numbers[pointer] << 1
 			break;
-		case '1':
-			numbers[pointer] = numbers[pointer]^2
-			break;
-		case '2':
-			numbers[pointer] = numbers[pointer]^4
-			break;
-		case '3':
-			numbers[pointer] = numbers[pointer]^8
-			break;
-		case '4':
-			numbers[pointer] = numbers[pointer]^16
-			break;
-		case '5':
-			numbers[pointer] = numbers[pointer]^32
-			break;
-		case '6':
-			numbers[pointer] = numbers[pointer]^64
-			break;
-		case '7':
-			numbers[pointer] = numbers[pointer]^128
+		case '}':
+			numbers[pointer] = numbers[pointer]>>1
 			break;
 		}
 		index++;
 	}
 }
 
+function setResolution(res)
+{
+	var radios = document.getElementsByName("resolution");
+	for (var i = 0, length = radios.length; i < length; i++) {
+	    if (radios[i].value == res) {
+	        radios[i].selected = true
+	        break;
+	    }
+	}
+}
 
+function changeResolution()
+{
+
+	switch(document.querySelector('input[name="resolution"]:checked').value)
+	{
+	case "p8":
+		imageWidth = 8
+		imageHeight = 8
+		break;
+	case "p16":
+		imageWidth = 16
+		imageHeight = 16
+		break;
+	case "p32":
+		imageWidth = 32
+		imageHeight = 32
+		break;
+	}
+
+	pixelWidth = canvasWidth/imageWidth;
+	pixelHeight = canvasHeight/imageHeight;
+}
 
 function drawPixel(value)
 {
@@ -125,7 +140,7 @@ function drawPixel(value)
 	ctx.fillStyle = 'rgb(' +getRed(value)+','+  getGreen(value)+','+ getBlue(value) + ')'
 	ctx.fillRect(x*pixelWidth, y*pixelHeight, pixelWidth, pixelHeight);
 
-	console.log(getRed(value));
+//	console.log(getRed(value));
 
 	currentPixel++;
 	if(currentPixel == imageWidth*imageHeight)
@@ -150,4 +165,45 @@ function getRed(value)
 function getHighlight(value)
 {
 	return 0.25+((196 & value)>>6)*0.25
+}
+
+function getExample()
+{
+	var textarea = document.querySelector(".txtarea");
+
+	switch(document.getElementById("example").value)
+	{
+	case "chess":
+		textarea.innerHTML = "->>++++[<.<.>.<.>.<.>.<..>.<.>.<.>.<.>.>-]"
+		setResolution("p8");
+		break;
+	case "pacman":
+		textarea.innerHTML = "->---->>++++++[<......>-]<.<.....>.........<.........>.>++[<.....<...........>>-]<....<..........>......<.......>.....<<.>>...<.....>......<<...>>..<.......>.....<<.>>...<..........>..>++[<.....<...........>>-]<......<.........>.........<.....>>++++[<......>-]"
+		setResolution("p16");
+		break;
+	case "colors":  
+		textarea.innerHTML = ".+[.+]";
+		setResolution("p16");
+		break;
+	}
+	//RunCode();
+	//alert('Selection changed!');
+}
+
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+            }
+        }
+    }
+    rawFile.send(null);
 }

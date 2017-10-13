@@ -9,19 +9,32 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 </head>
-	<body>
-		<h1>PixelF***</h1>
-		<canvas id="myCanvas" width="256" height="256" style="border:1px solid #d3d3d3;"></canvas> 
-		<br>
-		<textarea class="txtarea" rows="10" cols="50">.+[.+]</textarea>
-		<br>
-		<button onclick="myFunction()" class="btn btn-default">Click me</button>
-	<!--	<p class="text"></p>	-->
-		<div id="output"></div>
-		<form action="">
-			<label><input type="radio" name="resolution" value="p8"> 8x8<br></label>
-			<label><input type="radio" name="resolution" value="p16" checked> 16x16<br></label>
-			<label><input type="radio" name="resolution" value="p32"> 32x32</label>
-		</form>
+<body onload="onLoad();">
+
+		<div id="left">
+			<h1>PixelF***</h1>
+			<canvas id="myCanvas" width="512" height="512" style="border:1px solid #d3d3d3;"></canvas> 
+			<br>
+			<textarea class="txtarea" rows="10" cols="50">.+[.+]</textarea>
+			<br>
+			<p>Examples</p>
+			<select id="example" onchange="getExample()">
+			  	<option value="chess">Chessboard</option>
+  				<option value="colors" selected>Colors</option>
+				<option value="pacman">Pacman</option>
+			</select>
+			<form id="res" action="" onchange="changeResolution()">
+				<label><input type="radio" name="resolution" value="p8"> 8x8<br></label>
+				<label><input type="radio" name="resolution" value="p16" checked> 16x16<br></label>
+				<label><input type="radio" name="resolution" value="p32"> 32x32</label>
+			</form>
+			<button onclick="RunCode()" class="btn btn-default">Run</button>
+		<!--	<p class="text"></p>	-->
+			<div id="output" ></div>
+
+		</div>
+
+		<div id="right">
+		</div>
 	</body>
 </html>
