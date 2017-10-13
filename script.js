@@ -102,7 +102,7 @@ function setResolution(res)
 	var radios = document.getElementsByName("resolution");
 	for (var i = 0, length = radios.length; i < length; i++) {
 	    if (radios[i].value == res) {
-	        radios[i].selected = true
+	        radios[i].checked = true;
 	        break;
 	    }
 	}
