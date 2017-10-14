@@ -39,7 +39,7 @@ td:nth-of-type(1)
 	width: 10px;
 	padding: 10px;
 	background: #cccccc;
-	width: 33vw;
+	width: 30vw;
 	
 	background: #777777;
 	color: #ffffff;
@@ -51,10 +51,9 @@ td:nth-of-type(1)
 	margin-top: 10px;
 	background: #ffffff;
 	color: #000000;
-	width: 100%;
+	width: 30vw;
 	height: 300px;
 	word-wrap: break-word;
-	overflow:auto;
 }
 
 form
